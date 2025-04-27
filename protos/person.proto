@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+option csharp_namespace = "Person.Grpc.Protos";
+
+package person;
+
+// Defines a person entity.
+message Person {
+  string id = 1; // Unique identifier (UUID).
+  string first_name = 2; // First name of the person.
+  string last_name = 3; // Last name of the person.
+  string national_code = 4; // National identification code.
+  string birth_date = 5; // Birth date in ISO 8601 format (e.g., "1990-01-01").
+}
+
+// Request message for creating a person.
+message CreatePersonRequest {
+  Person person = 1; // Person data to create.
+}
+
+// Request message for updating a person.
+message UpdatePersonRequest {
+  Person person = 1; // Person data to update (id must match existing person).
+}
+
+// Request message for deleting a person.
+message DeletePersonRequest {
+  string id = 1; // ID of the person to delete.
+}
+
+// Request message for retrieving a person by ID.
+message GetPersonRequest {
+  string id = 1; // ID of the person to retrieve.
+}
+
+// Response message containing a single person.
+message PersonResponse {
+  Person person = 1; // The person data.
+}
+
+// Response message containing a list of persons.
+message PersonListResponse {
+  repeated Person persons = 1; // List of persons.
+}
+
+// Empty message for requests that don't require data.
+message Empty {}
+
+// Service for managing person data.
+service PersonService {
+  // Creates a new person.
+  rpc CreatePerson (CreatePersonRequest) returns (PersonResponse);
+  // Updates an existing person.
+  rpc UpdatePerson (UpdatePersonRequest) returns (PersonResponse);
+  // Deletes a person by ID.
+  rpc DeletePerson (DeletePersonRequest) returns (Empty);
+  // Retrieves a person by ID.
+  rpc GetPerson (GetPersonRequest) returns (PersonResponse);
+  // Retrieves all persons.
+  rpc GetAllPersons (Empty) returns (PersonListResponse);
+}
