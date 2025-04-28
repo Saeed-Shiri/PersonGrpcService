@@ -29,7 +29,7 @@ public class UpdatePersonCommandHandler : IRequestHandler<UpdatePersonCommand, P
             request.Person.NationalCode,
             request.Person.BirthDate);
 
-        await _personRepository.UpdateAsync(person);
+        //await _personRepository.UpdateAsync(person);
         await _personRepository.SaveChangesAsync();
 
         return new PersonDto(

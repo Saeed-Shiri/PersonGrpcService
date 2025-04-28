@@ -59,24 +59,12 @@ public class PersonRepository : IPersonRepository
         }
     }
 
-    public async Task UpdateAsync(Person person)
-    {
-        try
-        {
-            _context.Persons.Update(person);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error updating person with ID {Id}", person.Id);
-            throw;
-        }
-    }
-
     public async Task DeleteAsync(Person person)
     {
         try
         {
             _context.Persons.Remove(person);
+            await Task.CompletedTask;
         }
         catch (Exception ex)
         {

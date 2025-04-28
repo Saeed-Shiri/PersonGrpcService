@@ -4,13 +4,16 @@ option csharp_namespace = "Person.Grpc.Protos";
 
 package person;
 
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
 // Defines a person entity.
 message Person {
   string id = 1; // Unique identifier (UUID).
   string first_name = 2; // First name of the person.
   string last_name = 3; // Last name of the person.
   string national_code = 4; // National identification code.
-  string birth_date = 5; // Birth date in ISO 8601 format (e.g., "1990-01-01").
+  google.protobuf.Timestamp birth_date = 5; // Birth date and time (UTC).
 }
 
 // Request message for creating a person.
@@ -43,9 +46,6 @@ message PersonListResponse {
   repeated Person persons = 1; // List of persons.
 }
 
-// Empty message for requests that don't require data.
-message Empty {}
-
 // Service for managing person data.
 service PersonService {
   // Creates a new person.
@@ -53,9 +53,9 @@ service PersonService {
   // Updates an existing person.
   rpc UpdatePerson (UpdatePersonRequest) returns (PersonResponse);
   // Deletes a person by ID.
-  rpc DeletePerson (DeletePersonRequest) returns (Empty);
+  rpc DeletePerson (DeletePersonRequest) returns (google.protobuf.Empty);
   // Retrieves a person by ID.
   rpc GetPerson (GetPersonRequest) returns (PersonResponse);
   // Retrieves all persons.
-  rpc GetAllPersons (Empty) returns (PersonListResponse);
+  rpc GetAllPersons (google.protobuf.Empty) returns (PersonListResponse);
 }

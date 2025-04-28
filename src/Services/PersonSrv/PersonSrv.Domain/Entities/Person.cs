@@ -11,6 +11,10 @@ public class Person
     public string LastName { get; private set; }
     public string NationalCode { get; private set; }
     public DateTime BirthDate { get; private set; }
+    protected Person()
+    {
+        
+    }
 
     private Person(string name, string lastName, string nationalCode, DateTime birthDate)
     {
